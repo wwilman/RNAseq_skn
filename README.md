@@ -13,4 +13,15 @@ Wymagane oprogramowanie:
 - hisat2
 - R z pakietami Bioconductor: DESeq2,  ComplexHeatmap, pcaExplorer.
 
-Podsumowanie wymagań kolejnych skryptów:
+Podsumowanie kolejnych skryptów:
+1. Pierwsze 4 skrypty są wspólne dla każdej ścieżki analizy:
+  01.pobieranie_numerów - 
+  02.pobieranie_danych -
+  03.kontrola_jakości -
+2. Należy wybrać jeden z 3 skryptów kroku 5:
+  05.1_kwantyfikacja_kallisto
+  05.2_kwantyfikacja_salmon
+  05.3_mapowanie_hisat2
+3. Ostatni etap odpowiedni dla wszystkich skryptów kroku 5:
+  06.DE
+  
