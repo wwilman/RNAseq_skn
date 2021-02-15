@@ -3,7 +3,7 @@ library(gplots)
 library(ComplexHeatmap)
 library("circlize")
 #uzyskiwanie wyników dla ekspresji przy użyciu DeSeq2
-counts <- read.delim('/home/kons/A_SKN/trimmed/case_vs_control_hisat.txt', sep="\t", header=T, row.names=1)
+counts <- read.delim('/home/kons/A_SKN/trimmed/case_vs_control_salmon.txt', sep="\t", header=T, row.names=1)
 counts =  trunc(counts)
 counts <- as.matrix(counts)
 design <- data.frame( condition=factor( c("control", "control", "control", "control", "test", "test", "test","test") ) )
@@ -22,19 +22,17 @@ down <- down[order(down$padj),]
 de_resultsdown <- subset(down, log2FoldChange < 0)
 
 #zapisywanie wyników do plików
-write.table(de_resultsup, file='hisat_deseq2up.tsv', sep="\t", quote=F, row.names=F)
-write.table(de_resultsdown, file='hisat_deseq2down.tsv', sep="\t", quote=F, row.names=F)
-write.table(de_results, file='hisat_deseq2.tsv', sep="\t", quote=F, row.names=F)
+write.table(de_resultsup, file='salmon_deseq2up.tsv', sep="\t", quote=F, row.names=F)
+write.table(de_resultsdown, file='salmon_deseq2down.tsv', sep="\t", quote=F, row.names=F)
+write.table(de_results, file='salmon_deseq2.tsv', sep="\t", quote=F, row.names=F)
 
 #wykres MA
 plotMA(dataset, main="MA plot", ylim=c(-2, 2)) 
-
 #heatmapa
 normalized_expression <- counts(dataset, normalized=T)
 de_genes <- results(dataset) 
 genes <- normalized_expression[de_genes$padj < 0.05 & complete.cases(de_genes$padj),] 
 heatmap.2( as.matrix(genes), labRow=F, col=redgreen(100), scale="row", dendrogram="column", trace="none", cexCol=1.2, hclust=function(x) hclust(x,method="centroid"), distfun=function(x) as.dist(1-cor(t(x))) )
-
 #PCA
 library("pcaExplorer")
 pcaplot(dataset, intgroup = c("condition"))
