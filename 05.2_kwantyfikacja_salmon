@@ -4,11 +4,10 @@ salmon index -t Arabidopisis.fa.gz -i Arabidopsis_index_salmon
 
 #Kwantyfikacja ekspresji 
 #!/bin/bash  
-file="Arabidopsis_index.idx"
-inp=""
-fr="ERR4131"
 
-typ=".fastq.gz"
+fr="ERR4131"  
+
+typ=".fastq.gz"  
 
 for n in 950 951 952 953 962 963 964 965
 
