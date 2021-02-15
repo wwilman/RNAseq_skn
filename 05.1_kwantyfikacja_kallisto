@@ -1,11 +1,7 @@
-#do budowania indeksu pobieramy CDNA oraz ncRNA
+#tworzymy indeks do kwantyfikacji
 wget ftp://ftp.ensemblgenomes.org/pub/release-46/plants/fasta/arabidopsis_thaliana/ncrna/Arabidopsis_thaliana.TAIR10.ncrna.fa.gz
 wget ftp://ftp.ensemblgenomes.org/pub/release-46/plants/fasta/arabidopsis_thaliana/cdna/Arabidopsis_thaliana.TAIR10.cdna.all.fa.gz
-
-#łączymy je w jeden plik
 cat Arabidopsis_thaliana.TAIR10.cdna.all.fa.gz Arabidopsis_thaliana.TAIR10.ncrna.fa.gz > Arabidopsis_index
-
-#tworzenie indeksu za pomoca kallisto
 kallisto index -i Arabidopsis_index.idx Arabidopsis_index
 
 #Kwantyfikacja ekspresji 
