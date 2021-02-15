@@ -25,3 +25,39 @@ salmon quant -i Arabidopsis_index_salmon -l A \
          -r $fr$n$typ \
          -p 8 --validateMappings -o wyniki_salmon_$fr$n/$fr$n
 done
+
+#R
+library(DESeq2)
+c1<- read.table('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\sOSF\\c1.sf', sep="\t", header=T)
+c2<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\sOSF\\c2.sf', sep="\t", header=T)
+c3<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\sOSF\\c3.sf', sep="\t", header=T)
+e1<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\sOSF\\e1.sf', sep="\t", header=T)
+e2<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\sOSF\\e2.sf', sep="\t", header=T)
+e3<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\sOSF\\e3.sf', sep="\t", header=T)
+
+names(c1)[names(c1) == "NumReads"] <- "control"
+names(c2)[names(c2) == "NumReads"] <- "control"
+names(c3)[names(c3) == "NumReads"] <- "control"
+names(e1)[names(e1) == "NumReads"] <- "test"
+names(e2)[names(e2) == "NumReads"] <- "test"
+names(e3)[names(e3) == "NumReads"] <- "test"
+
+c1$control=as.integer(c1$control)
+c2$control=as.integer(c2$control)
+c3$control=as.integer(c3$control)
+e1$control=as.integer(e1$test)
+e2$control=as.integer(e2$test)
+e3$control=as.integer(e3$test)
+
+dane = cbind(c1$Name,c1$control,c2$control,c3$control,e1$test,e2$test,e3$test)
+names(dane)[1] <- "gene"
+names(dane)[2] <- "control"
+names(dane)[3] <- "control"
+names(dane)[4] <- "control"
+names(dane)[5] <- "test"
+names(dane)[6] <- "test"
+names(dane)[7] <- "test"
+
+write.table(dane, file='case_vs_control_salmon.txt', sep = "\t", quote = FALSE, row.names=FALSE, col.names=c("gene","control","control","control","test","test","test"))
+
+      
