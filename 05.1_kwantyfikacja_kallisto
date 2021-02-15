@@ -20,7 +20,8 @@ for n in 950 951 952 953 962 963 964 965
 
 do
 
-mkdir wyniki_kallisto$fr$n/$fr$n
+mkdir wyniki_kallisto_$fr$n
+mkdir wyniki_kallisto_$fr$n/$fr$n
 
 echo "===================================================="  
 
@@ -28,6 +29,6 @@ echo 'Pseudoaligning file: '$n
 
 echo "====================================================" 
 
-kallisto quant  --single --index=Arabidopsis_index.idx --output=wyniki_kallistofr/$ng$nr $inp$fr$n$typ $inp$fr$n$typ
+kallisto quant  --single -l 73 -s 5 --index=Arabidopsis_index.idx --output=wyniki_kallistofr/$ng$nr $inp$fr$n$typ $inp$fr$n$typ
 
 done
