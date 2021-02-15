@@ -1,0 +1,14 @@
+#!/bin/bash  
+file="Arabidopsis_index.idx"
+inp=""
+fr="ERR4131"  
+typ=".fastq.gz"  
+
+for n in 950 951 952 953 966 967 968 969
+
+do 
+		echo "================================"
+		echo "Mapping reads for" $fr$n
+		echo "=============================="
+		hisat2 -x ~/index/index -U $inp$fr$n'.fastq.gz' -S $inp$fr$n".sam"
+done
