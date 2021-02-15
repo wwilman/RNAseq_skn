@@ -1,0 +1,46 @@
+library(DESeq2) 
+
+counts <- read.delim('case_vs_control.txt', sep="\t", header=T, row.names=1) 
+
+counts =  trunc(counts) 
+
+counts <- as.matrix(counts) 
+
+design <- data.frame( condition=factor( c("control", "control", "control", "test", "test", "test") ) ) 
+
+rownames(design) <- colnames(counts) 
+
+dataset <- DESeqDataSetFromMatrix(countData = counts, colData = design, design = ~condition) 
+
+dataset <- DESeq(dataset) 
+
+de_results <- results(dataset) 
+
+new_columns <- data.frame(GeneID=rownames(de_results)) 
+
+de_results <- cbind( new_columns, de_results) 
+
+de_results = lfcShrink(de_results, coef="condition_control_vs_case", type="apeglm")  
+
+de_results=na.omit(de_results)  
+
+de_results=de_results[order(de_results$padj),]  
+
+up <- de_results[ de_results$padj < 0.05 & complete.cases(de_results$padj), ] 
+
+up <- up[order(up$padj),] 
+
+de_resultsup <- subset(up, log2FoldChange > 0)  
+
+down <- de_results[ de_results$padj < 0.05 & complete.cases(de_results$padj), ] 
+
+down <- down[order(down$padj),] 
+
+de_resultsdown <- subset(down, log2FoldChange < 0)  
+
+write.table(de_resultsup, file='wyniki_deseq2up.tsv', sep="\t", quote=F, row.names=F) 
+
+write.table(de_resultsdown, file='wyniki_deseq2down.tsv', sep="\t", quote=F, row.names=F) 
+
+write.table(de_results, file='wyniki_deseq2.tsv', sep="\t", quote=F, row.names=F) 
+
