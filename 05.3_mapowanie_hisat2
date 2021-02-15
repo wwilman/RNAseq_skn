@@ -24,3 +24,10 @@ echo "Counting data"
 echo "==============================" 
 
 featureCounts -a Arabidopsis_thaliana.TAIR10.49.gtf -g transcript_id -o counts_sorted.txt  *_sorted.bam
+
+#R
+Data_hs <- read.table('counts_sorted.txt',sep='\t',header=TRUE,skip=1)
+countData <- Data_hs[,7:12]
+rownames(countData) <-Data_hs$Geneid
+samples = names(countData)
+write.table(countData, file='count_matrix.txt', sep="\t", quote=F, row.names=T) 
