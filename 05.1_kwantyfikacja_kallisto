@@ -28,3 +28,38 @@ echo "===================================================="
 kallisto quant  --single -l 73 -s 5 --index=Arabidopsis_index.idx --output=wyniki_kallistofr/$ng$nr $inp$fr$n$typ $inp$fr$n$typ
 
 done
+
+#R
+
+c1<- read.table('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\c1.tsv', sep="\t", header=T)
+c2<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\c2.tsv', sep="\t", header=T)
+c3<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\c3.tsv', sep="\t", header=T)
+e1<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\e1.tsv', sep="\t", header=T)
+e2<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\e2.tsv', sep="\t", header=T)
+e3<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\e3.tsv', sep="\t", header=T)
+
+names(c1)[names(c1) == "est_counts"] <- "control"
+names(c2)[names(c2) == "est_counts"] <- "control"
+names(c3)[names(c3) == "est_counts"] <- "control"
+names(e1)[names(e1) == "est_counts"] <- "test"
+names(e2)[names(e2) == "est_counts"] <- "test"
+names(e3)[names(e3) == "est_counts"] <- "test"
+
+c1$control=as.integer(c1$control)
+c2$control=as.integer(c2$control)
+c3$control=as.integer(c3$control)
+e1$control=as.integer(e1$test)
+e2$control=as.integer(e2$test)
+e3$control=as.integer(e3$test)
+
+dane = cbind(c1$target_id,c1$control,c2$control,c3$control,e1$test,e2$test,e3$test)
+names(dane)[1] <- "gene"
+names(dane)[2] <- "control"
+names(dane)[3] <- "control"
+names(dane)[4] <- "control"
+names(dane)[5] <- "test"
+names(dane)[6] <- "test"
+names(dane)[7] <- "test"
+
+write.table(dane, file='case_vs_control_kallisto.txt', sep = "\t", quote = FALSE, row.names=FALSE, col.names=c("gene","control","control","control","test","test","test"))
+
