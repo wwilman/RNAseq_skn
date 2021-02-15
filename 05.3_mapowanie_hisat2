@@ -11,4 +11,16 @@ do
 		echo "Mapping reads for" $fr$n
 		echo "=============================="
 		hisat2 -x ~/index/index -U $inp$fr$n'.fastq.gz' -S $inp$fr$n".sam"
+		echo "SAM to BAM" $inp$fr$n
+		echo "==============================" 
+		samtools view -S -b $inp$fr$n".sam" > $inp$fr$n".bam"
+		echo "sort BAM" $inp$fr$n".bam" 
+		echo "==============================" 
+		samtools sort  $inp$fr$n".bam" -o $inp$fr$n"_sorted.bam" 
 done
+
+echo "================================" 
+echo "Counting data" 
+echo "==============================" 
+
+featureCounts -a Arabidopsis_thaliana.TAIR10.49.gtf -g transcript_id -o counts_sorted.txt  *_sorted.bam
