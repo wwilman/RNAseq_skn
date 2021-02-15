@@ -6,23 +6,23 @@ salmon index -t Arabidopisis.fa.gz -i Arabidopsis_index_salmon
 #!/bin/bash  
 file="Arabidopsis_index.idx"
 inp=""
-fr="ERR4131"  
+fr="ERR4131"
 
-typ=".fastq.gz"  
+typ=".fastq.gz"
 
-for n in 950 951 952 953 966 967 968 969
+for n in 950 951 952 953 962 963 964 965
 
 do
-
-mkdir wyniki_salmon$fr$n/$fr$n
+mkdir wyniki_salmon_$fr$n
+mkdir wyniki_salmon_$fr$n/$fr$n
 
 echo "===================================================="  
 
-echo 'Pseudoaligning file: '$n
+echo 'Pseudoaligning file: '$fr$n
 
 echo "====================================================" 
 
 salmon quant -i Arabidopsis_index_salmon -l A \
-         -r $inp$fr$typ \
-         -p 8 --validateMappings -o wyniki_salmon$fr$n/$fr$n
+         -r $fr$n$typ \
+         -p 8 --validateMappings -o wyniki_salmon_$fr$n/$fr$n
 done
