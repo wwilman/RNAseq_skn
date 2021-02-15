@@ -1,0 +1,28 @@
+#budowanie indeksu salmona
+cat Arabidopsis_thaliana.TAIR10.cdna.all.fa.gz Arabidopsis_thaliana.TAIR10.ncrna.fa.gz > Arabidopisis.fa.gz
+salmon index -t Arabidopisis.fa.gz -i Arabidopsis_index_salmon
+
+#Kwantyfikacja ekspresji 
+#!/bin/bash  
+file="Arabidopsis_index.idx"
+inp=""
+fr="ERR4131"  
+
+typ=".fastq.gz"  
+
+for n in 950 951 952 953 966 967 968 969
+
+do
+
+mkdir wyniki_salmon$fr$n/$fr$n
+
+echo "===================================================="  
+
+echo 'Pseudoaligning file: '$n
+
+echo "====================================================" 
+
+salmon quant -i Arabidopsis_index_salmon -l A \
+         -r $inp$fr$typ \
+         -p 8 --validateMappings -o wyniki_salmon$fr$n/$fr$n
+done
