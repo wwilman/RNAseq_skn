@@ -31,35 +31,44 @@ done
 
 #R
 
-c1<- read.table('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\c1.tsv', sep="\t", header=T)
-c2<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\c2.tsv', sep="\t", header=T)
-c3<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\c3.tsv', sep="\t", header=T)
-e1<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\e1.tsv', sep="\t", header=T)
-e2<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\e2.tsv', sep="\t", header=T)
-e3<- read.delim('C:\\Users\\konsi\\Desktop\\Wilman_Licencjat\\stand\\nsm\\e3.tsv', sep="\t", header=T)
+c1<- read.table('wyniki_kallisto_ERR4131950\abundance.tsv', sep="\t", header=T)
+c2<- read.delim('wyniki_kallisto_ERR4131951\abundance.tsv', sep="\t", header=T)
+c3<- read.delim('wyniki_kallisto_ERR4131952\abundance.tsv', sep="\t", header=T)
+c4<- read.delim('wyniki_kallisto_ERR4131953\abundance.tsv', sep="\t", header=T)
+f1<- read.delim('wyniki_kallisto_ERR4131962\abundance.tsv', sep="\t", header=T)
+f2<- read.delim('wyniki_kallisto_ERR4131963\abundance.tsv', sep="\t", header=T)
+f3 <- read.delim('wyniki_kallisto_ERR4131964\abundance.tsv', sep="\t", header=T)
+f4 <- read.delim('wyniki_kallisto_ERR4131965\abundance.tsv', sep="\t", header=T)
+
 
 names(c1)[names(c1) == "est_counts"] <- "control"
 names(c2)[names(c2) == "est_counts"] <- "control"
 names(c3)[names(c3) == "est_counts"] <- "control"
-names(e1)[names(e1) == "est_counts"] <- "test"
-names(e2)[names(e2) == "est_counts"] <- "test"
-names(e3)[names(e3) == "est_counts"] <- "test"
+names(c4)[names(c4) == "est_counts"] <- "control"
+names(f1)[names(f1) == "est_counts"] <- "test"
+names(f2)[names(f2) == "est_counts"] <- "test"
+names(f3)[names(f3) == "est_counts"] <- "test"
+names(f4)[names(f4) == "est_counts"] <- "test"
 
 c1$control=as.integer(c1$control)
 c2$control=as.integer(c2$control)
 c3$control=as.integer(c3$control)
-e1$control=as.integer(e1$test)
-e2$control=as.integer(e2$test)
-e3$control=as.integer(e3$test)
+c4$control=as.integer(c4$control)
+f1$control=as.integer(f1$test)
+f2$control=as.integer(f2$test)
+f3$control=as.integer(f3$test)
+f4$control=as.integer(f4$test)
 
-dane = cbind(c1$target_id,c1$control,c2$control,c3$control,e1$test,e2$test,e3$test)
+dane = cbind(c1$target_id,c1$control,c2$control,c3$control,c4$control,f1$test,f2$test,f3$test,f4$test)
 names(dane)[1] <- "gene"
 names(dane)[2] <- "control"
 names(dane)[3] <- "control"
 names(dane)[4] <- "control"
-names(dane)[5] <- "test"
+names(dane)[5] <- "control"
 names(dane)[6] <- "test"
 names(dane)[7] <- "test"
+names(dane)[8] <- "test"
+names(dane)[9] <- "test"
 
-write.table(dane, file='case_vs_control_kallisto.txt', sep = "\t", quote = FALSE, row.names=FALSE, col.names=c("gene","control","control","control","test","test","test"))
+write.table(dane, file='case_vs_control_kallisto.txt', sep = "\t", quote = FALSE, row.names=FALSE, col.names=c("gene","control","control","control","control","test","test","test","test"))
 
